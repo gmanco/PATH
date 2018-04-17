@@ -1,0 +1,1 @@
+{"model": {"n_factors": 32, "cascade_features": [["time_since_start", "time_since_last_event", "time_to_current", "ratio_events_to_current"]], "n_cells": 32, "dropout": 0.5, "weights_loss": [0.7, 0.3], "users_range": 1719, "max_cascade_len": 50}, "fitting": {"epochs": 1, "batch_size": 100}, "data": {"min_size": 1, "max_size": 50, "sample_size": 10}}

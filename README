@@ -1,0 +1,40 @@
+These are the instruction to run the code that implementing Temporal Recurrent Influence-based Activation Networks, submitted to PKDD2018.
+
+We have:
+- DATASET_NAME={flixter, twitter-large}
+
+NOTE that we do not include the datasets in the git repository. However, these can be provided upon request.
+
+To run the program, you must proceed as follows:
+
+(0) [optional] Change the configuration file located in TRIAN/datasets/DATASET_NAME/configuration_DATASET_NAME.json
+   - It is possible to change the number of cells, the batch size, the weights of the two losses of the model, etc.
+
+(1) Launch path-train -i DATASET_NAME
+
+(2.1) The traing phase will automatically save the best model in TRIAN/model/path/models/DATASET_NAME/model_file_name.h5
+     In order to use the produced model in the test phase, set model_for_prediction=model_file_name.h5 in parameters.py
+
+(2.2) Launch path-train -i DATASET_NAME
+
+(3.1) The results of the test will be saved in TRIAN/model/path/results/DATASET_NAME/model_file_name.h5_path_loss.csv
+
+(3.2) Set loss_file_path=model_file_name.h5_path_loss.csv in performance-evaluation.py
+
+(3.3) Launch performance-evaluation.py
+
+
+Comparison with NeuralHawkes (https://github.com/HMEIatJHU/neurawkes)
+
+- To convert datasets in a format readable by NeuralHawkes we provide the NeuralHawkes_converter.py script
+- You need to set the following variables:
+  (i) Train and test file names (e.g., TRIAN/datasets/flixster/train/train.dat and TRIAN/datasets/flixster/test/test.dat
+  (ii) Set dim_process=users_range (this parameter is available in dataset/DATASET_NAME/configuration_flixster.json)
+  (iii) Indicate the train, test and dev file names that will be produced by running the script
+
+- At this point you can lanuch NeuralHawkes on the produced files
+- For our comparison we used the following command (where ./data contains the 3 pickle files (train.pkl, test.pkl, dev.pkl) produced by our script) :
+
+train_models.py -fd ./data -m hawkesinhib -me 10 -d 32 -tr 0.8 -mt 1 -md 10 -sb 256 -tp 5 -ps 0 -s 101
+
+
